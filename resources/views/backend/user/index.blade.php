@@ -3,6 +3,22 @@
 @section('title','User')
 
 @section('content')
+    <div class="card shadow mb-2">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h5 class="m-0 font-weight-bold">
+                @php
+                    $userTotal = 0;
+                @endphp
+                @foreach ($users as $user)
+                    @php
+                        if($user->isOnline()){
+                            $userTotal = $userTotal + 1;
+                        }
+                    @endphp
+                @endforeach
+                Total User Online : {{ $userTotal}}</h5>
+        </div>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h5 class="m-0 font-weight-bold">User</h5>
@@ -28,7 +44,6 @@
                     </button>
                 </div>
             @endif
-
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

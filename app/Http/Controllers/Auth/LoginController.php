@@ -29,10 +29,14 @@ class LoginController extends Controller
     //protected $redirectTo = '/home';
     public function redirectTo()
     {
-        if (Auth::user()->role_id == 1) {
-            return 'role';
-        } else {
+        if (Auth::user()->role_id == 1 && Auth::user()->is_active == 0) {
+            return 'dashboard';
+        }
+        if (Auth::user()->role_id == 2 && Auth::user()->is_active == 0) {
             return '/';
+        } else {
+            Auth::logout();
+            return 'login';
         }
     }
 

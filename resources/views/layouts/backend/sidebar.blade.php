@@ -19,6 +19,22 @@
         </a>
     </li>
 
+    <li class="nav-item {{ (request()->segment(1) == 'group') ? 'active' : '' }} {{ (request()->segment(1) == 'category') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>Master Data</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Master Data:</h6>
+                <a class="collapse-item {{ (request()->segment(1) == 'group') ? 'active' : '' }}" href="{{ route('group.index')}}">Group</a>
+                <a class="collapse-item {{ (request()->segment(1) == 'category') ? 'active' : '' }}" href="{{ route('category.index')}}">Kategori</a>
+                <a class="collapse-item" href="#">Sub Kategori</a>
+                <a class="collapse-item" href="#">Produk</a>
+            </div>
+        </div>
+    </li>
+
     <li class="nav-item {{ (request()->segment(1) == 'role') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('role.index')}}">
             <i class="fas fa-fw fa-lock"></i>

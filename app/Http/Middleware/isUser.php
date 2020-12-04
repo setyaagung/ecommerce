@@ -18,18 +18,20 @@ class isUser
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role_id == 2 && Auth::user()->is_active) {
-            $banned = Auth::user()->is_active == 1;
-            Auth::logout();
-            if ($banned) {
-                $message = 'Akun anda telah dinonaktifkan. Silahkan hubungi Administrator';
+        if (Auth::user()->role_id == 2) {
+            if (Auth::check() && Auth::user()->is_active) {
+                $banned = Auth::user()->is_active == 1;
+                Auth::logout();
+                if ($banned) {
+                    $message = 'Akun anda telah dinonaktifkan. Silahkan hubungi Administrator';
+                }
+                return redirect()->route('login')->withErrors(['email' => $message]);
             }
-            return redirect()->route('login')->withErrors(['email' => $message]);
+            if (Auth::check()) {
+                $expiresAt = Carbon::now()->addMinutes(1);
+                Cache::put('user-is-online' . Auth::user()->id, true, $expiresAt);
+            }
+            return $next($request);
         }
-        if (Auth::check()) {
-            $expiresAt = Carbon::now()->addMinutes(1);
-            Cache::put('user-is-online' . Auth::user()->id, true, $expiresAt);
-        }
-        return $next($request);
     }
 }

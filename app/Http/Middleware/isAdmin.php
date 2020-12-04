@@ -32,6 +32,8 @@ class isAdmin
                 Cache::put('user-is-online' . Auth::user()->id, true, $expiresAt);
             }
             return $next($request);
+        } else {
+            return redirect('/');
         }
     }
 }
