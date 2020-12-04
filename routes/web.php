@@ -19,6 +19,8 @@ Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
     Route::resource('group', 'GroupController');
     Route::resource('category', 'CategoryController');
+    Route::resource('subcategory', 'SubCategoryController');
+    Route::resource('product', 'ProductController');
     Route::resource('role', 'RoleController');
     Route::resource('user', 'UserController');
 });

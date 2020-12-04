@@ -78,7 +78,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $groups = Group::all();
+        return view('backend.masterdata.category.edit', compact('category', 'groups'));
     }
 
     /**
@@ -90,7 +92,26 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $data = $request->all();
+        if ($request->hasFile('image')) {
+            Storage::delete($category->image);
+            $image_file = $request->file('image');
+            $image_extension = $image_file->getClientOriginalExtension();
+            $image_filename = time() . '.' . $image_extension;
+            $data['image'] = Storage::putFileAs('public/categoryimage', $request->file('image'), $image_filename);
+        }
+
+        if ($request->hasFile('icon')) {
+            Storage::delete($category->icon);
+            $icon_file = $request->file('icon');
+            $icon_extension = $icon_file->getClientOriginalExtension();
+            $icon_filename = time() . '.' . $icon_extension;
+            $data['icon'] = Storage::putFileAs('public/categoryicon', $request->file('icon'), $icon_filename);
+        }
+        $data['status'] = $request->input('status') == true ? 1 : 0;
+        $category->update($data);
+        return redirect()->back()->with('update', 'Data kategori berhasil diperbarui');
     }
 
     /**
@@ -101,6 +122,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        Storage::delete([$category->image, $category->icon]);
+        $category->delete();
+        return redirect()->back()->with('delete', 'Data kategori berhasil dihapus');
     }
 }

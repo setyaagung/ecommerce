@@ -19,7 +19,7 @@
         </a>
     </li>
 
-    <li class="nav-item {{ (request()->segment(1) == 'group') ? 'active' : '' }} {{ (request()->segment(1) == 'category') ? 'active' : '' }}">
+    <li class="nav-item {{ (request()->segment(1) == 'group') ? 'active' : '' }} {{ (request()->segment(1) == 'category') ? 'active' : '' }} {{ (request()->segment(1) == 'subcategory') ? 'active' : '' }} {{ (request()->segment(1) == 'product') ? 'active' : '' }}">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span>Master Data</span>
@@ -29,8 +29,8 @@
                 <h6 class="collapse-header">Master Data:</h6>
                 <a class="collapse-item {{ (request()->segment(1) == 'group') ? 'active' : '' }}" href="{{ route('group.index')}}">Group</a>
                 <a class="collapse-item {{ (request()->segment(1) == 'category') ? 'active' : '' }}" href="{{ route('category.index')}}">Kategori</a>
-                <a class="collapse-item" href="#">Sub Kategori</a>
-                <a class="collapse-item" href="#">Produk</a>
+                <a class="collapse-item {{ (request()->segment(1) == 'subcategory') ? 'active' : '' }}" href="{{ route('subcategory.index')}}">Sub Kategori</a>
+                <a class="collapse-item {{ (request()->segment(1) == 'product') ? 'active' : '' }}" href="{{ route('product.index')}}">Produk</a>
             </div>
         </div>
     </li>
