@@ -1,13 +1,13 @@
 @extends('layouts.backend.main')
 
-@section('title','Master Data | Produk')
+@section('title','Master Data | Sub Kategori')
 
 @section('content')
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-            <h5 class="m-0 font-weight-bold">Produk</h5>
+            <h5 class="m-0 font-weight-bold">Sub Kategori</h5>
             <div class="float-right">
-                <a href="{{ route('product.create')}}" class="btn btn-sm btn-primary">Tambah</a>
+                <a href="{{ route('subcategory.create')}}" class="btn btn-sm btn-primary">Tambah</a>
             </div>
         </div>
         <div class="card-body">
@@ -33,27 +33,27 @@
                         <tr>
                             <th>No</th>
                             <th>Nama</th>
-                            <th>Sub Kategori</th>
+                            <th>Kategori</th>
                             <th>Gambar</th>
                             <th>Show/Hide</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($products as $product)
+                        @foreach ($subcategories as $subcategory)
                             <tr>
                                 <td>{{ $loop->iteration}}</td>
-                                <td>{{ $product->name}}</td>
-                                <td>{{ $product->subcategory->name}}</td>
+                                <td>{{ $subcategory->name}}</td>
+                                <td>{{ $subcategory->category->name}}</td>
                                 <td>
-                                    <img src="{{ Storage::url($product->image)}}" class="img-fluid" width="100px">
+                                    <img src="{{ Storage::url($subcategory->image)}}" class="img-fluid" width="100px">
                                 </td>
                                 <td>
-                                    <input type="checkbox" {{ $product->status == 1 ? 'checked' : ''}}>
+                                    <input type="checkbox" {{ $subcategory->status == 1 ? 'checked' : ''}}>
                                 </td>
                                 <td>
-                                    <a href="{{ route('product.edit',$product->id)}}" class="btn btn-sm btn-warning">Edit</a>
-                                    <form action="{{ route('product.destroy', $product->id)}}" class="d-inline" method="POST">
+                                    <a href="{{ route('subcategory.edit',$subcategory->id)}}" class="btn btn-sm btn-warning">Edit</a>
+                                    <form action="{{ route('subcategory.destroy', $subcategory->id)}}" class="d-inline" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini ?')">Hapus</button>

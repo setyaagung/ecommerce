@@ -61,7 +61,7 @@
                 </div>
                 <div class="float-right">
                     <a href="{{ route('category.index')}}" class="btn btn-secondary">Kembali</a>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </div>
             </form>
         </div>

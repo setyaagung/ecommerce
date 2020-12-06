@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Group;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GroupController extends Controller
 {
@@ -39,6 +39,7 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['slug'] = Str::slug($request->input('name'));
         $data['status'] = $request->input('status') == true ? 1 : 0;
         Group::create($data);
         return redirect()->back()->with('create', 'Data group berhasil ditambahkan');
@@ -78,6 +79,7 @@ class GroupController extends Controller
     {
         $group = Group::findOrFail($id);
         $data = $request->all();
+        $data['slug'] = Str::slug($request->input('name'));
         $data['status'] = $request->input('status') == true ? 1 : 0;
         $group->update($data);
         return redirect()->back()->with('update', 'Data group berhasil ditambahkan');

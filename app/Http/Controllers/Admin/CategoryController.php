@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Category;
 use App\Model\Group;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -41,6 +42,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['slug'] = Str::slug($request->input('name'));
         if ($request->hasFile('image')) {
             $image_file = $request->file('image');
             $image_extension = $image_file->getClientOriginalExtension();
@@ -94,6 +96,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $data = $request->all();
+        $data['slug'] = Str::slug($request->input('name'));
         if ($request->hasFile('image')) {
             Storage::delete($category->image);
             $image_file = $request->file('image');
@@ -123,6 +126,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+        if ($category->subcategories()->count()) {
+            return redirect()->back()->with('cant-delete', 'Data kategori tidak bisa dihapus karena sudah terhubung dengan data sub kategori');
+        }
         Storage::delete([$category->image, $category->icon]);
         $category->delete();
         return redirect()->back()->with('delete', 'Data kategori berhasil dihapus');
