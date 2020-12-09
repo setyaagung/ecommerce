@@ -62,13 +62,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 py-1 bg-info shadow">
-            @php
+        <div class="col-md-12 py-1 bg-info shadow-none">
+            <div class="container-fluid">
+                @php
                 $groups = DB::select('select * from groups')
             @endphp
             @foreach ($groups as $group)
-                <a href="" class="text-white waves-effect" style="margin-left: 30px">{{ $group->name}}</a>
+                <a href="{{ route('collection.groupview', $group->slug)}}" class="px-4 text-white waves-effect">{{ $group->name}}</a>
             @endforeach
+            </div>
         </div>
     </div>
 </div>

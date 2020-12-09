@@ -13,6 +13,10 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/koleksi', 'Frontend\CollectionController@index')->name('collection.index');
+Route::get('/koleksi/{group_slug}', 'Frontend\CollectionController@groupview')->name('collection.groupview');
+Route::get('/koleksi/{group_slug}/{category_slug}', 'Frontend\CollectionController@categoryview')->name('collection.categoryview');
+Route::get('/koleksi/{group_slug}/{category_slug}/{subcategory_slug}', 'Frontend\CollectionController@subcategoryview')->name('collection.subcategoryview');
 
 //Admin
 Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {

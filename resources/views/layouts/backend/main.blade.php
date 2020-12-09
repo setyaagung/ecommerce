@@ -20,6 +20,7 @@
     <link href="{{ asset('assets/backend/css/select2.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/select2-bootstrap4.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/backend/vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -105,7 +106,7 @@
 
     <!-- Page level custom scripts -->
     <script src="{{ asset('assets/backend/js/demo/datatables-demo.js')}}"></script>
-    <script src="{{ asset('assets/backend/js/ckeditor.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script>
         $(function(){
             $('.select2').select2()

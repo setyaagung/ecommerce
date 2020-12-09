@@ -57,7 +57,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Deskripsi Singkat</label>
-                            <textarea name="small_description" class="form-control" rows="3">{{ $product->small_description}}</textarea>
+                            <textarea name="small_description" id="sumnote_small" class="form-control" rows="3">{{ $product->small_description}}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="">Gambar</label>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Sale Tag</label>
-                            <input type="number" class="form-control" name="sale_tag" value="{{ $product->sale_tag}}">
+                            <input type="text" class="form-control" name="sale_tag" value="{{ $product->sale_tag}}">
                         </div>
                         <div class="table-responsive">
                             <table class="table">
@@ -101,17 +101,17 @@
                         <div class="form-group">
                             <label for="">High Light</label>
                             <input type="text" name="high_heading" class="form-control" value="{{ $product->high_heading}}">
-                            <textarea name="high_description" class="form-control mt-1" rows="3">{{ $product->high_description}}</textarea>
+                            <textarea name="high_description" id="sumnote_high" class="form-control mt-1" rows="3">{{ $product->high_description}}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="">Deskripsi Produk</label>
                             <input type="text" name="description_heading" class="form-control" value="{{ $product->description_heading}}">
-                            <textarea name="description" class="form-control mt-1" rows="3">{{ $product->description}}</textarea>
+                            <textarea name="description" id="sumnote_desc" class="form-control mt-1" rows="3">{{ $product->description}}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="">Spesifikasi Produk</label>
                             <input type="text" name="detail_heading" class="form-control" value="{{$product->detail_heading}}">
-                            <textarea name="detail" class="form-control mt-1" rows="3">{{$product->detail}}</textarea>
+                            <textarea name="detail" id="sumnote_detail" class="form-control mt-1" rows="3">{{$product->detail}}</textarea>
                         </div>
                     </div>
                     <div class="tab-pane fade" id="seo" role="tabpanel" aria-labelledby="seo-tab">
@@ -171,3 +171,24 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $('#sumnote_small').summernote({
+            tabsize: 2,
+            height: 100
+        });
+        $('#sumnote_high').summernote({
+            tabsize: 2,
+            height: 100
+        });
+        $('#sumnote_desc').summernote({
+            tabsize: 2,
+            height: 100
+        });
+        $('#sumnote_detail').summernote({
+            tabsize: 2,
+            height: 100
+        });
+    </script>
+@endpush

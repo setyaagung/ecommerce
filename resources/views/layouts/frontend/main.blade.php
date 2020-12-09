@@ -14,12 +14,22 @@
         <link href="{{ asset('assets/frontend/css/mdb.min.css')}}" rel="stylesheet">
         <!-- Your custom styles (optional) -->
         <link href="{{ asset('assets/frontend/css/style.css')}}" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Nunito', sans-serif;
+            }
+            .sort-font{
+                color: #262626;
+                font-size: 15px;
+                margin: 0 10px;
+            }
+        </style>
     </head>
 
     <body>
         @include('layouts.frontend.navbar')
 
-        <main>
+        <main style="min-height: 410px">
             @yield('content')
         </main>
 
