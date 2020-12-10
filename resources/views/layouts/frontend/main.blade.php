@@ -5,7 +5,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>@yield('title')Aminous Indonesia</title>
+        <title>@yield('title') | Aminous Indonesia</title>
+        <meta name="description" content="@yield('meta_description')">
+        <meta name="keyword" content="@yield('meta_keyword')">
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <!-- Bootstrap core CSS -->
@@ -15,8 +17,8 @@
         <!-- Your custom styles (optional) -->
         <link href="{{ asset('assets/frontend/css/style.css')}}" rel="stylesheet">
         <style>
-            body {
-                font-family: 'Nunito', sans-serif;
+            body{
+                font-family: 'Poppins',sans-serif;
             }
             .sort-font{
                 color: #262626;

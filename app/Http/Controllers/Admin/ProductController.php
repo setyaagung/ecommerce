@@ -43,6 +43,7 @@ class ProductController extends Controller
     {
         $data = $request->all();
         $data['slug'] = Str::slug($request->input('name'));
+        $data['meta_title'] = $request->input('name');
         if ($request->hasFile('image')) {
             $image_file = $request->file('image');
             $image_extension = $image_file->getClientOriginalExtension();
@@ -95,6 +96,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $data = $request->all();
         $data['slug'] = Str::slug($request->input('name'));
+        $data['meta_title'] = $request->input('name');
         if ($request->hasFile('image')) {
             Storage::delete($product->image);
             $image_file = $request->file('image');

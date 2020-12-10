@@ -13,13 +13,13 @@ class CollectionController extends Controller
 {
     public function index()
     {
-        $groups = Group::all();
+        $groups = Group::where('status', 1)->get();
         return view('frontend.group.index', compact('groups'));
     }
 
     public function groupview($group_slug)
     {
-        $group = Group::where('slug', $group_slug)->first();
+        $group = Group::where('slug', $group_slug)->where('status', 1)->first();
 
         $categories = Category::where('group_id', $group->id)->where('status', 1)->orderBy('name', 'ASC')->get();
         return view('frontend.group.category', compact('group', 'categories'));
@@ -27,14 +27,14 @@ class CollectionController extends Controller
 
     public function categoryview($group_slug, $category_slug)
     {
-        $category = Category::where('slug', $category_slug)->first();
+        $category = Category::where('slug', $category_slug)->where('status', 1)->first();
         $subcategories = SubCategory::where('category_id', $category->id)->where('status', 1)->orderBy('name', 'ASC')->get();
         return view('frontend.group.subcategory', compact('category', 'subcategories'));
     }
 
     public function subcategoryview(Request $request, $group_slug, $category_slug, $subcategory_slug)
     {
-        $subcategory = SubCategory::where('slug', $subcategory_slug)->first();
+        $subcategory = SubCategory::where('slug', $subcategory_slug)->where('status', 1)->first();
 
         if ($request->get('sort') == 'price_asc') {
             $products = Product::where('sub_category_id', $subcategory->id)->where('status', 1)->orderBy('offer_price', 'ASC')->get();
@@ -49,5 +49,11 @@ class CollectionController extends Controller
         }
 
         return view('frontend.group.product', compact('subcategory', 'products'));
+    }
+
+    public function productview($group_slug, $category_slug, $subcategory_slug, $product_slug)
+    {
+        $product = Product::where('slug', $product_slug)->where('status', 1)->first();
+        return view('frontend.group.product-view', compact('product'));
     }
 }

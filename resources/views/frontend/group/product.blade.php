@@ -36,7 +36,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-7 border-right border-left">
-                                            <a href="{{ route('collection.subcategoryview',[$product->subcategory->category->group->slug,$product->subcategory->category->slug,$product->subcategory->slug,$product->slug])}}">
+                                            <a href="{{ route('collection.productview',[$product->subcategory->category->group->slug,$product->subcategory->category->slug,$product->subcategory->slug,$product->slug])}}">
                                                 <h5 class="mb-3">{{ $product->name}}</h5>
                                             </a>
                                             <div class="">
@@ -50,7 +50,7 @@
                                                 <h5 class="font-italic font-weight-bold">Rp {{ number_format($product->offer_price,0, ',' , '.')}}</h5>
                                             </div>
                                             <div class="text-right">
-                                                <a href="{{ route('collection.subcategoryview',[$product->subcategory->category->group->slug,$product->subcategory->category->slug,$product->subcategory->slug,$product->slug])}}"
+                                                <a href="{{ route('collection.productview',[$product->subcategory->category->group->slug,$product->subcategory->category->slug,$product->subcategory->slug,$product->slug])}}"
                                                     class="btn btn-outline-primary py-1 px-2">
                                                     Lihat Detail
                                                 </a>
