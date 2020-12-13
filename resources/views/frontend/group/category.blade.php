@@ -1,13 +1,13 @@
 @extends('layouts.frontend.main')
 
-@section('title', 'Koleksi - Kategori | ')
+@section('title', 'Kategori')
 
 @section('content')
-    <div class="card mb-5 card py-3 shadow-sm" style="margin-top: 105px">
+    <div class="card mb-5 card py-3 shadow-sm" style="margin-top: 100px">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <label class="mb-0">Koleksi / {{ $group->name}}</label>
+                    <label class="mb-0">Kategori / {{ $group->name}}</label>
                 </div>
             </div>
         </div>

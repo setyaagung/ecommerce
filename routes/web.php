@@ -12,12 +12,18 @@
 */
 Auth::routes();
 
+//Frontend
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/koleksi', 'Frontend\CollectionController@index')->name('collection.index');
-Route::get('/koleksi/{group_slug}', 'Frontend\CollectionController@groupview')->name('collection.groupview');
-Route::get('/koleksi/{group_slug}/{category_slug}', 'Frontend\CollectionController@categoryview')->name('collection.categoryview');
-Route::get('/koleksi/{group_slug}/{category_slug}/{subcategory_slug}', 'Frontend\CollectionController@subcategoryview')->name('collection.subcategoryview');
-Route::get('/koleksi/{group_slug}/{category_slug}/{subcategory_slug}/{product_slug}', 'Frontend\CollectionController@productview')->name('collection.productview');
+Route::get('/kategori', 'Frontend\CollectionController@index')->name('collection.index');
+Route::get('/kategori/{group_slug}', 'Frontend\CollectionController@groupview')->name('collection.groupview');
+Route::get('/kategori/{group_slug}/{category_slug}', 'Frontend\CollectionController@categoryview')->name('collection.categoryview');
+Route::get('/kategori/{group_slug}/{category_slug}/{subcategory_slug}', 'Frontend\CollectionController@subcategoryview')->name('collection.subcategoryview');
+Route::get('/kategori/{group_slug}/{category_slug}/{subcategory_slug}/{product_slug}', 'Frontend\CollectionController@productview')->name('collection.productview');
+
+//Cart
+Route::get('/keranjang', 'Frontend\CartController@index')->name('cart.index');
+Route::post('/add-to-cart', 'Frontend\CartController@addtocart')->name('cart.addtocart');
+Route::get('/load-cart-data', 'Frontend\CartController@cartloadbyajax')->name('cart.loadbyajax');
 
 //Admin
 Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {

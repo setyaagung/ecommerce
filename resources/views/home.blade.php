@@ -1,5 +1,7 @@
 @extends('layouts.frontend.main')
 
+@section('title','Selamat Datang')
+    
 @section('content')
     @include('frontend.banner.banner')
     <section class="pt-5">

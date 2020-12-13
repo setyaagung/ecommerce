@@ -1,8 +1,8 @@
-<div class="white scrolling-navbar fixed-top">
+<div class="scrolling-navbar fixed-top">
     <div class="row">
         <div class="col-md-12">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background: white">
                 <div class="container-fluid">
                     <!-- Brand -->
                     <a class="navbar-brand waves-effect" href="{{ route('home')}}"">
@@ -19,19 +19,21 @@
                         <!-- Right -->
                         <ul class="navbar-nav nav-flex-icons ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link waves-effect">
+                                <a href="{{ route('cart.index')}}" class="nav-link text-dark">
                                     <i class="fas fa-shopping-cart"></i>
                                     <span class="clearfix d-none d-sm-inline-block"> Cart </span>
-                                    <span class="badge badge-pill red z-depth-1"> 1 </span>
+                                    <span class="basket-item-count">
+                                        <span class="badge badge-pill badge-danger"> 0 </span>
+                                    </span>
                                 </a>
                             </li>
                             @guest
                                 <li class="nav-item">
-                                    <a class="nav-link waves-effect" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link text-dark" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link waves-effect" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a class="nav-link text-dark" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
                                 @endif
                             @else
@@ -62,13 +64,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 py-1 bg-info shadow-none">
+        <div class="col-md-12 py-1 bg-dark shadow-none">
             <div class="container-fluid">
                 @php
                 $groups = DB::select('select * from groups')
             @endphp
             @foreach ($groups as $group)
-                <a href="{{ route('collection.groupview', $group->slug)}}" class="px-4 text-white waves-effect">{{ $group->name}}</a>
+                <a href="{{ route('collection.groupview', $group->slug)}}" class="px-4 text-white">{{ $group->name}}</a>
             @endforeach
             </div>
         </div>

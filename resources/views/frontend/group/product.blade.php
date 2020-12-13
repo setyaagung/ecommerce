@@ -1,9 +1,11 @@
 @extends('layouts.frontend.main')
 
-@section('title', 'Koleksi - Produk | ')
+@section('title')
+    {{ $subcategory->name}}
+@endsection
 
 @section('content')
-    <div class="card mb-5 card py-3 shadow-sm" style="margin-top: 105px">
+    <div class="card mb-5 card py-3 shadow-sm" style="margin-top: 100px">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -47,7 +49,7 @@
                                             <div class="text-right">
                                                 <h6 class="font-italic text-dark badge badge-warning px-3 py-1">{{ $product->sale_tag}}</h6>
                                                 <h6 class="font-italic"><s>Rp {{ number_format($product->original_price,0, ',' , '.')}}</s></h6>
-                                                <h5 class="font-italic font-weight-bold">Rp {{ number_format($product->offer_price,0, ',' , '.')}}</h5>
+                                                <h5 class="font-italic font-weight-bold text-dark">Rp {{ number_format($product->offer_price,0, ',' , '.')}}</h5>
                                             </div>
                                             <div class="text-right">
                                                 <a href="{{ route('collection.productview',[$product->subcategory->category->group->slug,$product->subcategory->category->slug,$product->subcategory->slug,$product->slug])}}"
