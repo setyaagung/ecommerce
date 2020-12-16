@@ -32,7 +32,7 @@ class CartController extends Controller
         if (in_array($prod_id_is_there, $item_id_list)) {
             foreach ($cart_data as $keys => $values) {
                 if ($cart_data[$keys]["item_id"] == $product_id) {
-                    $cart_data[$keys]["item_quantity"] = $request->input('quantity');
+                    $cart_data[$keys]["item_quantity"] = $quantity;
                     $item_data = json_encode($cart_data);
                     $minutes = 60;
                     Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
@@ -79,5 +79,68 @@ class CartController extends Controller
             die;
             return;
         }
+    }
+
+    public function updatetocart(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $quantity = $request->input('quantity');
+
+        if (Cookie::get('shopping_cart')) {
+            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+            $cart_data = json_decode($cookie_data, true);
+
+            $item_id_list = array_column($cart_data, 'item_id');
+            $prod_id_is_there = $product_id;
+
+            if (in_array($prod_id_is_there, $item_id_list)) {
+                foreach ($cart_data as $keys => $values) {
+                    if ($cart_data[$keys]["item_id"] == $product_id) {
+                        $cart_data[$keys]["item_quantity"] = $quantity;
+                        $totalprice = ($cart_data[$keys]["item_price"] * $quantity);
+                        $grandtotalprice = 'Rp ' . number_format($totalprice, 0, ',', '.');
+                        $item_data = json_encode($cart_data);
+                        $minutes = 60;
+                        Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                        return response()->json([
+                            'status' => '"' . $cart_data[$keys]["item_name"] . '" Quantity Updated',
+                            'grandtotal' => '' . $grandtotalprice . ''
+                        ]);
+                    }
+                }
+            }
+        }
+    }
+    public function deletefromcart(Request $request)
+    {
+        $product_id = $request->input('product_id');
+
+        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+        $cart_data = json_decode($cookie_data, true);
+
+        $item_id_list = array_column($cart_data, 'item_id');
+        $prod_id_is_there = $product_id;
+
+        if (in_array($prod_id_is_there, $item_id_list)) {
+            foreach ($cart_data as $keys => $values) {
+                if ($cart_data[$keys]["item_id"] == $product_id) {
+                    unset($cart_data[$keys]);
+                    $item_data = json_encode($cart_data);
+                    $minutes = 60;
+                    Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                    return response()->json([
+                        'status' => 'Item Dihapus dari Keranjang'
+                    ]);
+                }
+            }
+        }
+    }
+
+    public function clearcart()
+    {
+        Cookie::queue(Cookie::forget('shopping_cart'));
+        return response()->json([
+            'status' => 'Keranjang Belanjamu Kosong'
+        ]);
     }
 }

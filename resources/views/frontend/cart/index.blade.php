@@ -21,87 +21,117 @@
                             @php
                                 $total = 0;
                             @endphp
-                            <div class="row">
-                                @foreach ($cart_data as $data)
-                                    <div class="col-md-12 mb-3">
-                                        <div class="card shadow-none">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <div>
-                                                            <img src="{{ Storage::url($data['item_image'])}}" class="img-fluid w-25" alt="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-5 col-sm-10">
-                                                        <h5 class="mb-1 font-weight-bold">{{ $data['item_name']}}</h5>
-                                                        <input type="number" class="form-control form-control-sm" value="{{ $data['item_quantity']}}" style="width: 80px">
-                                                    </div>
-                                                    <div class="col-md-3 col-sm-6">
-                                                        <table>
-                                                            <tr>
-                                                                <td>Harga</td>
-                                                                <td>&nbsp;:&nbsp;</td>
-                                                                <td>Rp {{ number_format($data['item_price'],0,',','.')}}</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>Total </td>
-                                                                <td>&nbsp;:&nbsp;</td>
-                                                                <td>Rp {{ number_format($data['item_price'] * $data['item_quantity'],0,',','.')}}</td>
-                                                            </tr>
-                                                        </table>
-                                                    </div>
-                                                    <div class="col-md-1 col-sm-2">
-                                                        <button class="btn btn-danger btn-sm" style="float: right"><i class="fas fa-times"></i></button>
-                                                    </div>
-                                                    @php $total = $total + ($data["item_quantity"] * $data["item_price"]) @endphp
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
+                            <div class="row mb-3">
+                                <div class="col-md-8 col-sm-12"></div>
+                                <div class="col-md-4 col-sm-8">
+                                    <a href="javascript:void(0)" class="clear-cart btn btn-sm btn-danger float-right">Hapus Semua</a>
+                                </div>
                             </div>
-                            <div class="row">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Gambar</th>
+                                                    <th>Item</th>
+                                                    <th>Quantity</th>
+                                                    <th>Harga</th>
+                                                    <th>Subtotal</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($cart_data as $data)
+                                                    <tr class="cartpage">
+                                                        <td>
+                                                            <img src="{{ Storage::url($data['item_image'])}}" class="img-fluid" width="50">
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="text-dark font-weight-bold">{{ $data['item_name']}}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <div class="product-quantity">
+                                                                <input type="hidden" class="product_id" value="{{ $data['item_id']}}">
+                                                                <div class="input-group input-group-sm quantity" style="width: 100px">
+                                                                    <div class="input-group-prepend decrease-btn changeQuantity" style="cursor: pointer">
+                                                                        <span class="input-group-text">-</span>
+                                                                    </div>
+                                                                    <input type="text" class="qty-input form-control form-control-sm text-center" maxlength="2" max="10" value="{{ $data['item_quantity']}}">
+                                                                    <div class="input-group-append increase-btn changeQuantity" style="cursor: pointer">
+                                                                        <span class="input-group-text">+</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>Rp {{ number_format($data['item_price'],0,',','.') }}</td>
+                                                        <td class="cart-total-price">Rp {{ number_format($data['item_price'] * $data['item_quantity'],0,',','.')}}</td>
+                                                        <td><button type="button" class="btn btn-danger btn-sm delete-cart-data" style="float: right"><i class="fas fa-times"></i></button></td>
+                                                        @php $total = $total + ($data["item_quantity"] * $data["item_price"]) @endphp
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-3">
 
                                 <div class="col-md-8 col-sm-12 estimate-ship-tax mb-3">    
                                 </div><!-- /.estimate-ship-tax -->
 
                                 <div class="col-md-4 col-sm-12">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h6 class="cart-subtotal-name">Subtotal</h6>
+                                    <div class="card card-body">
+                                        <div id="totalajaxcall">
+                                            <div class="totalpricingload">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-subtotal-name">Subtotal</h6>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-subtotal-price">
+                                                            Rp
+                                                            <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
+                                                        </h6>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <h6 class="cart-subtotal-price">
-                                                        Rp
-                                                        <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
-                                                    </h6>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-subtotal-name">PPN</h6>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-subtotal-price">
+                                                            Rp
+                                                            <span class="cart-grand-price-viewajax">0</span>
+                                                        </h6>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h6 class="cart-grand-name">Grand Total</h6>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-grand-name">Grand Total</h6>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <h6 class="cart-grand-price">
+                                                            Rp
+                                                            <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
+                                                        </h6>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <h6 class="cart-grand-price">
-                                                        Rp
-                                                        <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
-                                                    </h6>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="cart-checkout-btn text-center">
-                                                        @if (Auth::user())
-                                                            <a href="{{ url('checkout') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
-                                                        @else
-                                                            <a href="{{ url('login') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
-                                                            {{-- you add a pop modal for making a login --}}
-                                                        @endif
-                                                        <h6 class="mt-3">Checkout with Fabcart</h6>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="cart-checkout-btn text-center">
+                                                            @if (Auth::user())
+                                                                <a href="{{ url('checkout') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
+                                                            @else
+                                                                <a href="{{ url('login') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
+                                                                {{-- you add a pop modal for making a login --}}
+                                                            @endif
+                                                            <h6 class="mt-3">Checkout with Fabcart</h6>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

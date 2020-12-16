@@ -24,6 +24,9 @@ Route::get('/kategori/{group_slug}/{category_slug}/{subcategory_slug}/{product_s
 Route::get('/keranjang', 'Frontend\CartController@index')->name('cart.index');
 Route::post('/add-to-cart', 'Frontend\CartController@addtocart')->name('cart.addtocart');
 Route::get('/load-cart-data', 'Frontend\CartController@cartloadbyajax')->name('cart.loadbyajax');
+Route::post('/update-to-cart', 'Frontend\CartController@updatetocart')->name('cart.updatetocart');
+Route::delete('/delete-from-cart', 'Frontend\CartController@deletefromcart')->name('cart.deletefromcart');
+Route::get('/clear-cart', 'Frontend\CartController@clearcart')->name('cart.clearcart');
 
 //Admin
 Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {
