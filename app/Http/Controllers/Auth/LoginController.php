@@ -27,16 +27,28 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = '/home';
-    public function redirectTo()
+    //public function redirectTo()
+    //{
+    //    if (Auth::user()->role_id == 1 && Auth::user()->is_active == 0) {
+    //        return 'dashboard';
+    //    }
+    //    if (Auth::user()->role_id == 2 && Auth::user()->is_active == 0) {
+    //        return '/';
+    //    } else {
+    //        Auth::logout();
+    //        return 'login';
+    //    }
+    //}
+
+    public function authenticated()
     {
         if (Auth::user()->role_id == 1 && Auth::user()->is_active == 0) {
-            return 'dashboard';
-        }
-        if (Auth::user()->role_id == 2 && Auth::user()->is_active == 0) {
-            return '/';
+            return redirect('dashboard');
+        } elseif (Auth::user()->role_id == 2 && Auth::user()->is_active == 0) {
+            return redirect()->back();
         } else {
             Auth::logout();
-            return 'login';
+            return redirect()->back()->with('status', 'Akun anda tidak aktif. Silahkan hubungi Admin kami');
         }
     }
 

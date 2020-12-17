@@ -28,6 +28,7 @@ Route::post('/update-to-cart', 'Frontend\CartController@updatetocart')->name('ca
 Route::delete('/delete-from-cart', 'Frontend\CartController@deletefromcart')->name('cart.deletefromcart');
 Route::get('/clear-cart', 'Frontend\CartController@clearcart')->name('cart.clearcart');
 
+
 //Admin
 Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard.index');
@@ -43,4 +44,6 @@ Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {
 Route::namespace('Frontend')->middleware(['auth', 'isUser'])->group(function () {
     Route::get('/my-profile', 'UserController@myprofile')->name('my-profile');
     Route::post('/my-profile-update', 'UserController@profileupdate')->name('my-profile-update');
+    //checkout
+    Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 });

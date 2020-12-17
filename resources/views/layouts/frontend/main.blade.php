@@ -49,5 +49,14 @@
 
         <script src="{{ asset('js/custom.js')}}"></script>
         <script src="{{ asset('js/alertify.min.js')}}"></script>
+        <script>
+            @error('email')
+                $('#loginModal').modal('show');
+            @enderror
+            @if(session('status'))
+                alertify.set('notifier','position','top-right');
+                alertify.success('{{ session('status')}}')
+            @endif
+        </script>
     </body>
 </html>

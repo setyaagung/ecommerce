@@ -35,9 +35,9 @@
                                                 <tr>
                                                     <th>Gambar</th>
                                                     <th>Item</th>
-                                                    <th>Quantity</th>
                                                     <th>Harga</th>
-                                                    <th>Subtotal</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -50,6 +50,7 @@
                                                         <td>
                                                             <h6 class="text-dark font-weight-bold">{{ $data['item_name']}}</h6>
                                                         </td>
+                                                        <td>Rp {{ number_format($data['item_price'],0,',','.') }}</td>
                                                         <td>
                                                             <div class="product-quantity">
                                                                 <input type="hidden" class="product_id" value="{{ $data['item_id']}}">
@@ -64,7 +65,6 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>Rp {{ number_format($data['item_price'],0,',','.') }}</td>
                                                         <td class="cart-total-price">Rp {{ number_format($data['item_price'] * $data['item_quantity'],0,',','.')}}</td>
                                                         <td><button type="button" class="btn btn-danger btn-sm delete-cart-data" style="float: right"><i class="fas fa-times"></i></button></td>
                                                         @php $total = $total + ($data["item_quantity"] * $data["item_price"]) @endphp
@@ -79,6 +79,7 @@
                             <div class="row mt-3">
 
                                 <div class="col-md-8 col-sm-12 estimate-ship-tax mb-3">    
+                                    <a href="/" class="btn btn-dark pr-3 pl-3">CONTINUE SHOPPING</a>
                                 </div><!-- /.estimate-ship-tax -->
 
                                 <div class="col-md-4 col-sm-12">
@@ -87,10 +88,10 @@
                                             <div class="totalpricingload">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-subtotal-name">Subtotal</h6>
+                                                        <h6 class="cart-subtotal-name font-weight-bold text-dark">Subtotal</h6>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-subtotal-price">
+                                                        <h6 class="cart-subtotal-price font-weight-bold text-dark">
                                                             Rp
                                                             <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
                                                         </h6>
@@ -99,10 +100,10 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-subtotal-name">PPN</h6>
+                                                        <h6 class="cart-subtotal-name font-weight-bold text-dark">PPN</h6>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-subtotal-price">
+                                                        <h6 class="cart-subtotal-price font-weight-bold text-dark">
                                                             Rp
                                                             <span class="cart-grand-price-viewajax">0</span>
                                                         </h6>
@@ -111,10 +112,10 @@
                                                 <hr>
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-grand-name">Grand Total</h6>
+                                                        <h6 class="cart-grand-name font-weight-bold text-dark">Grand Total</h6>
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <h6 class="cart-grand-price">
+                                                        <h6 class="cart-grand-price font-weight-bold text-dark">
                                                             Rp
                                                             <span class="cart-grand-price-viewajax">{{ number_format($total, 0,',','.') }}</span>
                                                         </h6>
@@ -125,9 +126,9 @@
                                                     <div class="col-md-12">
                                                         <div class="cart-checkout-btn text-center">
                                                             @if (Auth::user())
-                                                                <a href="{{ url('checkout') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
+                                                                <a href="{{ route('checkout') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
                                                             @else
-                                                                <a href="{{ url('login') }}" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
+                                                                <a href="#" data-toggle="modal" data-target="#loginModal" class="btn btn-success btn-block checkout-btn">PROCCED TO CHECKOUT</a>
                                                                 {{-- you add a pop modal for making a login --}}
                                                             @endif
                                                             <h6 class="mt-3">Checkout with Fabcart</h6>

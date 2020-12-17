@@ -1,6 +1,6 @@
 @extends('layouts.frontend.main')
 
-@section('title', 'My Profile | ')
+@section('title', 'My Profile')
 @section('content')
     <section style="padding-top: 120px">
         <div class="container">
