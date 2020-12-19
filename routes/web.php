@@ -46,4 +46,5 @@ Route::namespace('Frontend')->middleware(['auth', 'isUser'])->group(function () 
     Route::post('/my-profile-update', 'UserController@profileupdate')->name('my-profile-update');
     //checkout
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+    Route::get('/checkout/city/{province_id}', 'CheckoutController@getcity')->name('getcity');
 });

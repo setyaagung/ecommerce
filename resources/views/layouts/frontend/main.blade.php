@@ -58,5 +58,6 @@
                 alertify.success('{{ session('status')}}')
             @endif
         </script>
+        @stack('scripts')
     </body>
 </html>
