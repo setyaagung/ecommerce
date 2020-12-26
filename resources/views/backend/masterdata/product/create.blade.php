@@ -66,6 +66,10 @@
                             <label for="">Sale Tag</label>
                             <input type="text" class="form-control" name="sale_tag" value="{{ old('sale_tag')}}">
                         </div>
+                        <div class="form-group">
+                            <label for="">Berat (gram)</label>
+                            <input type="number" class="form-control" name="weight" value="{{ old('weight')}}">
+                        </div>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>

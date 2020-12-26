@@ -43,6 +43,7 @@ class CartController extends Controller
             $product = Product::findOrFail($product_id);
             $product_name = $product->name;
             $product_image = $product->image;
+            $product_weight = $product->weight;
             $priceori = $product->original_price;
             $priceval = $product->offer_price;
 
@@ -51,6 +52,7 @@ class CartController extends Controller
                     'item_id' => $product_id,
                     'item_name' => $product_name,
                     'item_image' => $product_image,
+                    'item_weight' => $product_weight,
                     'item_oriprice' => $priceori,
                     'item_price' => $priceval,
                     'item_quantity' => $quantity

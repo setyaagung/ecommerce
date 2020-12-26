@@ -38,14 +38,21 @@
     <li class="nav-item {{ (request()->segment(1) == 'role') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('role.index')}}">
             <i class="fas fa-fw fa-lock"></i>
-        <span>Role</span>
+            <span>Role</span>
         </a>
     </li>
 
     <li class="nav-item {{ (request()->segment(1) == 'user') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('user.index')}}">
             <i class="fas fa-fw fa-user"></i>
-        <span>User</span>
+            <span>User</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ (request()->segment(1) == 'company') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('company.index')}}">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Profil Perusahaan</span>
         </a>
     </li>
 

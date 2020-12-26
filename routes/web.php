@@ -38,6 +38,8 @@ Route::namespace('Admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('product', 'ProductController');
     Route::resource('role', 'RoleController');
     Route::resource('user', 'UserController');
+    Route::resource('company', 'CompanyController');
+    Route::get('/company/city/{province_id}', 'CompanyController@getcity');
 });
 
 //USER
@@ -47,4 +49,5 @@ Route::namespace('Frontend')->middleware(['auth', 'isUser'])->group(function () 
     //checkout
     Route::get('/checkout', 'CheckoutController@index')->name('checkout');
     Route::get('/checkout/city/{province_id}', 'CheckoutController@getcity')->name('getcity');
+    Route::get('/checkout/{origin}/{destination}/{weight}/{courier}', 'CheckoutController@getshippingcost');
 });

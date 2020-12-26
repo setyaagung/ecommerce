@@ -96,8 +96,8 @@ $(document).ready(function () {
                 //window.location.reload();
                 thisClick.closest(".cartpage").find('.cart-total-price').text(response.grandtotal);
                 $('#totalajaxcall').load(location.href + ' .totalpricingload');
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success(response.status);
+                //alertify.set('notifier', 'position', 'top-right');
+                //alertify.success(response.status);
             }
         });
     });
@@ -139,8 +139,8 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
                 window.location.reload();
-                alertify.set('notifier', 'position', 'top-right');
-                alertify.success(response.status);
+                //alertify.set('notifier', 'position', 'top-right');
+                //alertify.success(response.status);
             }
         });
 

@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label class="font-weight-bold">Nama <i class="text-danger">*</i></label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" value="{{ Auth::user()->name}}">
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -59,12 +59,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">Kota <i class="text-danger">*</i></label>
-                                    <select class="form-control" name="city"></select>
+                                    <select class="form-control" name="city" disabled></select>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">Kode POS <i class="text-danger">*</i></label>
                                     <input type="text" class="form-control">
                                 </div>
+                                <div class="form-group">
+                                    <label class="font-weight-bold">Pengiriman via <i class="text-danger">*</i></label>
+                                    <select name="courier" class="form-control">
+                                        <option value="jne">Jalur Nugraha Ekakurir ( JNE )</option>
+                                        <option value="tiki">Citra Van Titipan Kilat ( TIKI )</option>
+                                        <option value="pos">POS Indonesia ( POS )</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary btn-block mb-4 btn-shipping">Cek Ongkir</button>
+                                <div class="form-group list-shipping"></div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">Pesan</label>
                                     <textarea class="form-control" rows="3"></textarea>
@@ -77,6 +87,7 @@
                             @if (Cookie::get('shopping_cart'))
                                 @php
                                     $total = 0;
+                                    $totalWeight = 0;
                                 @endphp
                                 <div class="card">
                                     <div class="card-header bg-dark text-white">
@@ -98,12 +109,19 @@
                                                             x{{ $item['item_quantity']}}
                                                         </td>
                                                         <td>Rp {{ number_format($item['item_price'] * $item['item_quantity'],0,',','.')}}</td>
-                                                        @php $total = $total + ($item["item_quantity"] * $item["item_price"]) @endphp
+                                                        @php 
+                                                            $total = $total + ($item["item_quantity"] * $item["item_price"]);
+                                                            $totalWeight += ($item["item_weight"] * $item["item_quantity"]);
+                                                        @endphp
                                                     </tr>
                                                 @endforeach
                                                 <tr>
                                                     <td>Subtotal</td>
                                                     <td>Rp {{ number_format($total, 0,',','.') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Berat <i>(gram)</i></td>
+                                                    <td>{{ $totalWeight }} <i>(gram)</i></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Ongkos Kirim</td>
@@ -138,8 +156,77 @@
 
 @push('scripts')
     <script>
+        function convertToRupiah(number) {
+            if (number) {
+                var rupiah = "";
+                var numberrev = number.toString().split("").reverse().join("");
+            
+                for (var i = 0; i < numberrev.length; i++)
+                if (i % 3 == 0)
+                    rupiah += numberrev.substr(i, 3) + ".";
+                    return ("Rp "+rupiah.split("", rupiah.length - 1).reverse().join(""));
+            }else{
+                return number;
+            }
+        }
+
         $(document).ready(function(){
+            //shipping
+            $('.btn-shipping').on('click',function(e){
+                e.preventDefault();
+                $('.list-shipping').empty();
+                var weight = {{ $totalWeight}}
+                var origin = '{{ $origin}}';
+                var destination =  $('select[name="city"]').val();
+                var courier = $('select[name="courier"]').val();
+
+                $.ajax({
+                    type: 'GET',
+                    dataType: 'json',
+                    url: "/checkout/"+origin+"/"+destination+"/"+weight+"/"+courier,
+                    success:function(data){
+                        //console.log(data);
+                        var shipping = '';
+                        $.each(data, function(key, value){
+                            shipping += '<table class="table table-striped table-bordered">';
+                                shipping += '<thead>';
+                                    shipping += '<tr>';
+                                        shipping += '<th>Layanan</th>';
+                                        shipping += '<th>Harga</th>';
+                                        shipping += '<th>Estimasi</th>';
+                                        shipping += '<th></th>';
+                                    shipping += '</tr>';
+                                shipping += '</thead>';
+                                shipping += '<tbody>';
+                                $.each(value.costs,function(a,b){
+                                    var code = value.code;
+                                    var string = code.toUpperCase();
+                                    shipping += '<tr>';
+                                        shipping += '<td>';
+                                            shipping += string+' - '+b.service;
+                                        shipping += '</td>';
+                                        shipping += '<td>';
+                                            shipping += convertToRupiah(b.cost[0].value);
+                                        shipping += '</td>';
+                                        shipping += '<td>';
+                                            shipping += b.cost[0].etd+ ' hari';
+                                        shipping += '</td>';
+                                        shipping += '<td>';
+                                            shipping += '';
+                                        shipping += '</td>';
+                                    shipping += '</tr>';
+                                });
+                                shipping += '</tbody>';
+                            shipping += '</table>';
+                        });
+                        $('.list-shipping').append(shipping);
+                    }
+                });
+            });
+
+            //provinsi
             $('select[name="province"]').on('change', function () {
+                $('select[name="city"]').empty().prop('disabled',true);
                 var provinceId = $(this).val();
 
                 if(provinceId){
@@ -149,14 +236,13 @@
                         url: "/checkout/city/"+provinceId,
                         success: function(data){
                             //console.log(data);
-                            $('select[name="city"]').empty();
                             $.each(data, function(key, value){
-                                $('select[name="city"]').append('<option value="'+ value.city_id +'">' + value.type + ' ' + value.city_name + '</option>');
+                                $('select[name="city"]').append('<option value="'+ value.city_id +'">' + value.type + ' ' + value.city_name + '</option>').prop('disabled',false);
                             });
                         }
                     });
                 }else{
-                    $('select[name="city"]').empty();
+                    $('select[name="city"]').empty().prop('disabled',true);
                 }
             });
         });
